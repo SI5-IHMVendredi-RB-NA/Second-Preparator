@@ -1,0 +1,7 @@
+{
+  "name": "preparator-two",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
