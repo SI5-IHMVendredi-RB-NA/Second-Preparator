@@ -180,19 +180,18 @@ export class HomePage {
         //this.orders = v ;
       });
   }
-
   readyVague(vague) {
     console.log(vague);
     const index = this.vagues.indexOf(vague);
     this.vagues.splice(index, 1);
     this.cdr.detectChanges();
 
-    this.http.post<any[]>('http://localhost:9428/api/user', vague.order1).subscribe( v => {
-        console.log(v);
+    this.http.post<any[]>('http://localhost:9428/api/user/vague', vague.order1).subscribe( v => {
+      console.log(v);
     });
 
-    this.http.post<any[]>('http://localhost:9428/api/user', vague.order2).subscribe( v => {
-        console.log(v);
+    this.http.post<any[]>('http://localhost:9428/api/user/vague', vague.order2).subscribe( v => {
+      console.log(v);
     });
   }
 
@@ -225,7 +224,7 @@ export class HomePage {
             vague.order1 = order;
             this.vagues.push(vague);
           }
-      } 
+      }
   }
 
 }
