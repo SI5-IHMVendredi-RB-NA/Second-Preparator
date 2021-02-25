@@ -1,20 +1,109 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Preparateur Dessert + Boissons
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!--<ion-card>
+  <ion-item class="ion-activated">
+    <ion-icon name="wifi" slot="start"></ion-icon>
+    <ion-label>Card Link Item 1 activated</ion-label>
+  </ion-item>
+</ion-card> -->
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content [fullscreen]="true" *ngIf = "!isRushHour()">
+  <ion-fab vertical="center" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" *ngIf="!micToggle" (click)="textToSpeech()">
+      <ion-icon style="height: 50px; width: 50px" name="mic-off-outline"   ></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="micToggle" (click)="textToSpeech()">
+      <ion-icon style="height: 50px; width: 50px" name="mic-outline" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!--<ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 1</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <div *ngFor="let order of this.orders " >
+    <ion-card [class.active]="this.orders.indexOf(order) === 0">
+      <div class="ion-card-item">
+        <ion-item class="ion-activated">
+          Entrée : {{order?.repas.entree}}
+        </ion-item>
+        <br>
+        <br>
+        <ion-item class="ion-activated">
+          Plat : {{order?.repas.plat}}
+        </ion-item>
+      </div>
+
+      <div class="ion-card-item">
+        <ion-item class="ion-activated">
+          Dessert : {{order?.repas.dessert}}
+        </ion-item>
+        <br>
+        <br>
+        <ion-item class="ion-activated">
+          Boisson : {{order?.repas.boisson}}
+        </ion-item>
+      </div>
+
+      <ion-button *ngIf="this.orders.indexOf(order) === 0" class="ready-button" (click)="ready(order)">Ready</ion-button>
+
+    </ion-card>
+  </div>
+
+
+  <!--<app-explore-container name="Tab 1 page"></app-explore-container>-->
+</ion-content>
+
+<ion-content [fullscreen]="true" *ngIf = "isRushHour()">
+  <ion-fab vertical="center" horizontal="end" slot="fixed">
+    <ion-fab-button color="danger" *ngIf="!micToggle" (click)="textToSpeech()">
+      <ion-icon style="height: 50px; width: 50px" name="mic-off-outline"   ></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="micToggle" (click)="textToSpeech()">
+      <ion-icon style="height: 50px; width: 50px" name="mic-outline" ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <!--<ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 1</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <div *ngFor="let vague of this.vagues " >
+    <ion-card [class.active]="this.vagues.indexOf(vague) === 0">
+      <div class="ion-card-item">
+        Desserts : 
+        <ion-item class="ion-activated">
+          {{vague?.order1.repas.dessert}}
+        </ion-item>
+        <br>
+        <br>
+        <ion-item class="ion-activated" *ngIf = "vague?.order2 !== null">
+          {{vague?.order2.repas.dessert}}
+        </ion-item>
+      </div>
+
+      <div class="ion-card-item">
+        Boissons :
+        <ion-item class="ion-activated">
+          {{vague?.order1.repas.boisson}}
+        </ion-item>
+        <br>
+        <br>
+        <ion-item class="ion-activated" *ngIf = "vague?.order2 !== null">
+          {{vague?.order2.repas.boisson}}
+        </ion-item>
+      </div>
+
+      <ion-button *ngIf="this.vagues.indexOf(vague) === 0" class="ready-button" (click)="readyVague(vague)">Ready</ion-button>
+
+    </ion-card>
   </div>
 </ion-content>
