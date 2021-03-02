@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Preparateur Dessert + Boissons
+      Preparateur Dessert + Boissons - Remy -
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,7 +13,7 @@
   </ion-item>
 </ion-card> -->
 
-<ion-content [fullscreen]="true" *ngIf = "!isRushHour()">
+<ion-content [fullscreen]="true" *ngIf = "false">
   <ion-fab vertical="center" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" *ngIf="!micToggle" (click)="textToSpeech()">
       <ion-icon style="height: 50px; width: 50px" name="mic-off-outline"   ></ion-icon>
@@ -61,7 +61,7 @@
   <!--<app-explore-container name="Tab 1 page"></app-explore-container>-->
 </ion-content>
 
-<ion-content [fullscreen]="true" *ngIf = "isRushHour()">
+<ion-content [fullscreen]="true" *ngIf = "rushHour">
   <ion-fab vertical="center" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" *ngIf="!micToggle" (click)="textToSpeech()">
       <ion-icon style="height: 50px; width: 50px" name="mic-off-outline"   ></ion-icon>
@@ -80,25 +80,21 @@
     <ion-card [class.active]="this.vagues.indexOf(vague) === 0">
       <div class="ion-card-item">
         Desserts : 
-        <ion-item class="ion-activated">
-          {{vague?.order1.repas.dessert}}
-        </ion-item>
-        <br>
-        <br>
-        <ion-item class="ion-activated" *ngIf = "vague?.order2 !== null">
-          {{vague?.order2.repas.dessert}}
+        <ion-item class="ion-activated" lines = "none">
+          {{getDessertsPerVague(vague)}}
+
+          <br>
+          <br>
         </ion-item>
       </div>
 
       <div class="ion-card-item">
         Boissons :
-        <ion-item class="ion-activated">
-          {{vague?.order1.repas.boisson}}
-        </ion-item>
-        <br>
-        <br>
-        <ion-item class="ion-activated" *ngIf = "vague?.order2 !== null">
-          {{vague?.order2.repas.boisson}}
+        <ion-item class="ion-activated" lines = "none">
+          {{getDrinksPerVague(vague)}}
+
+          <br>
+          <br>
         </ion-item>
       </div>
 
