@@ -61,7 +61,7 @@
   <!--<app-explore-container name="Tab 1 page"></app-explore-container>-->
 </ion-content>
 
-<ion-content [fullscreen]="true" *ngIf = "rushHour">
+<ion-content [fullscreen]="true" *ngIf = "rushHour && rushMode">
   <ion-fab vertical="center" horizontal="end" slot="fixed">
     <ion-fab-button color="danger" *ngIf="!micToggle" (click)="textToSpeech()">
       <ion-icon style="height: 50px; width: 50px" name="mic-off-outline"   ></ion-icon>
@@ -79,7 +79,7 @@
   <div *ngFor="let vague of this.vagues " >
     <ion-card [class.active]="this.vagues.indexOf(vague) === 0">
       <div class="ion-card-item">
-        Desserts : 
+        Desserts :
         <ion-item class="ion-activated" lines = "none">
           {{getDessertsPerVague(vague)}}
 

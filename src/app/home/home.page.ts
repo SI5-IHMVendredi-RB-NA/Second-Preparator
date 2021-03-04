@@ -27,7 +27,8 @@ export class HomePage {
   idVague = 0;
   textPerVague = {};
   MAX_VAGUES_ORDERS = 5;
-  
+  rushMode = false;
+
   constructor(private http: HttpClient, private sseService: SseService, private cdr: ChangeDetectorRef,
     private localNotification: LocalNotifications, private plt: Platform) {
     // let source = new EventSource('http://localhost:9428/api/repas/sse');
@@ -50,7 +51,7 @@ export class HomePage {
           let msg = res.data? res.data.mydata : '';
           console.log(msg);
         });
-  
+
         this.localNotification.on('trigger').subscribe(res => {
           let msg = res.data? res.data.mydata : '';
           console.log(msg);
@@ -73,7 +74,7 @@ export class HomePage {
       this.orders = v ;
     }); */
       this.sseService
-        .getServerSentEvent('http://10.189.174.180:9428/api/order/stream')
+        .getServerSentEvent('http://localhost:9428/api/order/stream')
         .subscribe(data => {
           console.log(data);
           const order = JSON.parse(data.data);
@@ -86,15 +87,23 @@ export class HomePage {
         });
 
         this.sseService
-        .getServerSentEvent('http://10.189.174.180:9428/api/preparator/stream')
+        .getServerSentEvent('http://localhost:9428/api/preparator/stream')
         .subscribe(data => {
-          console.log(JSON.parse(data.data));
-          console.log('Vague terminée par ' + JSON.parse(data.data).name_preparator);
-          this.scheduleNotification('Vague terminée par ' + JSON.parse(data.data).name_preparator);
-          //const order = JSON.parse(data.data);
-          //this.orders.push(order.order);
-          //this.scheduleNotification('Votre commande est prête à être retirée !');
+          console.log(data)
+          if(data.data === 'rush') {
+            console.log('RUSH');
+            this.rushMode = true;
+          }else {
+            console.log(JSON.parse(data.data));
+            console.log('Vague terminée par ' + JSON.parse(data.data).name_preparator);
+            this.scheduleNotification('Vague terminée par ' + JSON.parse(data.data).name_preparator);
+            //const order = JSON.parse(data.data);
+            //this.orders.push(order.order);
+            //this.scheduleNotification('Votre commande est prête à être retirée !');
+          }
+
         });
+
   }
 
   scheduleNotification(message: string) {
@@ -222,7 +231,7 @@ export class HomePage {
       this.orders.splice(index, 1);
       this.cdr.detectChanges();
 
-      this.http.post<any[]>('http://10.189.174.180:9428/api/user', order).subscribe( v => {
+      this.http.post<any[]>('http://localhost:9428/api/user', order).subscribe( v => {
           console.log(v);
         //this.orders = v ;
       });
@@ -247,7 +256,7 @@ export class HomePage {
   isRushHour(): void {
     if(this.orders.length > this.MAX_VAGUES_ORDERS) {
       this.rushHour = true;
-    } 
+    }
     else{
       this.rushHour = false;
     }
