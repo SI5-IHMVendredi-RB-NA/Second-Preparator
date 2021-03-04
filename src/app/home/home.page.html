@@ -63,10 +63,10 @@
 
 <ion-content [fullscreen]="true" *ngIf = "rushHour && rushMode">
   <ion-fab vertical="center" horizontal="end" slot="fixed">
-    <ion-fab-button color="danger" *ngIf="!micToggle" (click)="textToSpeech()">
+    <ion-fab-button color="danger" *ngIf="!micToggle" (click)="textToSpeechVagues()">
       <ion-icon style="height: 50px; width: 50px" name="mic-off-outline"   ></ion-icon>
     </ion-fab-button>
-    <ion-fab-button *ngIf="micToggle" (click)="textToSpeech()">
+    <ion-fab-button *ngIf="micToggle" (click)="textToSpeechVagues()">
       <ion-icon style="height: 50px; width: 50px" name="mic-outline" ></ion-icon>
     </ion-fab-button>
   </ion-fab>
